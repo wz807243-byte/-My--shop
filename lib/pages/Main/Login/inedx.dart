@@ -10,9 +10,11 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("登入")),
-      body: Center(child: Text("登入界面")),
+    return Scaffold (
+      appBar: AppBar(
+        title: Text("登入")
+      ),
+      body: Center(child: Text("登入界面"),),
     );
   }
 }
