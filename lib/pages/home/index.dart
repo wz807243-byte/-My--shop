@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hm_shop/componerts/home/HmHot.dart';
+import 'package:hm_shop/apii/home.dart';
 import 'package:hm_shop/componerts/home/HmMoreList.dart';
 import 'package:hm_shop/componerts/home/HmSlider.dart';
 import 'package:hm_shop/componerts/home/Hmcategory.dart';
@@ -13,19 +13,19 @@ class HomeVeiw extends StatefulWidget {
 }
 
 class _HomeVeiwState extends State<HomeVeiw> {
-  final List<BannerItem> _bannerlist = [
-    BannerItem(
-      id: '1',
-      imgUrl: 'https://picsum.photos/id/1/800/400', // 随机风景图1
-    ),
-    BannerItem(
-      id: '2',
-      imgUrl: 'https://picsum.photos/id/10/800/400', // 随机风景图2
-    ),
-    BannerItem(
-      id: '3',
-      imgUrl: 'https://picsum.photos/id/20/800/400', // 随机风景图3
-    ),
+  List<BannerItem> _bannerlist = [
+    // BannerItem(
+    //   id: '1',
+    //   imgUrl: 'https://picsum.photos/id/1/800/400', // 随机风景图1
+    // ),
+    // BannerItem(
+    //   id: '2',
+    //   imgUrl: 'https://picsum.photos/id/10/800/400', // 随机风景图2
+    // ),
+    // BannerItem(
+    //   id: '3',
+    //   imgUrl: 'https://picsum.photos/id/20/800/400', // 随机风景图3
+    // ),
   ];
   List<Widget> _getScrollViewchilder() {
     return [
@@ -52,6 +52,18 @@ class _HomeVeiwState extends State<HomeVeiw> {
         sliver: const Hmmorelist(),
       ),
     ];
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getBanndrList();
+  }
+
+  void _getBanndrList() async {
+    _bannerlist = await getBannerListAPI();
+    setState(() {});
   }
 
   @override

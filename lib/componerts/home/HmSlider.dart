@@ -17,6 +17,17 @@ class _HmSliderpageState extends State<HmSliderpage> {
   // 正确：使用控制器类来初始化
   //定义页面绑定页面
   final CarouselSliderController _controller = CarouselSliderController();
+
+  String _fallbackImageUrl(int index, {String? id}) {
+    final seed = (id != null && id.isNotEmpty) ? id : index.toString();
+    return 'https://picsum.photos/seed/$seed/800/400';
+  }
+
+  String _resolveBannerUrl(int index) {
+    final item = widget.bannerList[index];
+    final url = item.imgUrl.trim();
+    return url.isEmpty ? _fallbackImageUrl(index, id: item.id) : url;
+  }
   Widget _getSearch() {
     return Positioned(
       top: 10,
@@ -53,10 +64,18 @@ class _HmSliderpageState extends State<HmSliderpage> {
       //绑定页面
       carouselController: _controller,
       items: List.generate(widget.bannerList.length, (index) {
+        final url = _resolveBannerUrl(index);
         return Image.network(
-          widget.bannerList[index].imgUrl,
+          url,
           fit: BoxFit.cover,
           width: screenwidth,
+          errorBuilder: (context, error, stackTrace) {
+            return Image.network(
+              _fallbackImageUrl(index, id: widget.bannerList[index].id),
+              fit: BoxFit.cover,
+              width: screenwidth,
+            );
+          },
         );
       }),
       options: CarouselOptions(
